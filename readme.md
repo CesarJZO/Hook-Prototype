@@ -1,5 +1,7 @@
 # Hook prototype
 
+![logo](Assets/Media/UI/logo_hd.png)
+
 In this project, I will do all the tests for the mechanics of my game.  
 The idea is to make a fast moving side scrolling platformer with a core mechanic, the *Hook*. I'm taking some inspirations:
 
