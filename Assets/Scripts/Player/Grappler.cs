@@ -1,78 +1,72 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Grappler : MonoBehaviour
 {
-    [SerializeField] float dampingRatio;
-    [SerializeField] LayerMask grappeable;
-    [SerializeField] Actions actions;
-    CircleCollider2D anchorSensor;
-    float maxDistance;
-    LineRenderer line;
-    Vector2 grapplingPoint;
-    SpringJoint2D springJoint;
-
-    PlayerInput playerInput;
-    InputAction shootAction;
+    public GameObject cursorTemplate;
+    public LayerMask Anchors;
+    private bool grappling;
+    private LineRenderer lineRenderer;
+    private GameObject currentCursor;
+    private CircleCollider2D hookArea;
+    private SpringJoint2D springJoint;
+    private PlayerInput playerInput;
+    private InputAction shootAction;
 
     void Awake()
     {
-        anchorSensor = GetComponentInChildren<CircleCollider2D>();
-        maxDistance = anchorSensor.radius;
-        line = GetComponent<LineRenderer>();
-        playerInput = GetComponent<PlayerInput>();
-        springJoint = gameObject.AddComponent<SpringJoint2D>();
+        lineRenderer = GetComponent<LineRenderer>();
+        hookArea = GetComponent<CircleCollider2D>();
+        springJoint = GetComponentInParent<SpringJoint2D>();
         springJoint.enabled = false;
-        shootAction = playerInput.actions[actions.shoot];
+        playerInput = GetComponentInParent<PlayerInput>();
+        shootAction = playerInput.actions[Actions.Shoot];
     }
+
     void Update()
     {
-        if (shootAction.WasReleasedThisFrame())
+        if (shootAction.WasPressedThisFrame() && currentCursor != null && currentCursor.transform.position != Vector3.zero)
+            StartGrapple();
+        else if (shootAction.WasReleasedThisFrame())
             StopGrapple();
     }
 
     void LateUpdate()
     {
-        DrawRope();
+        if (grappling)
+            DrawRope();
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (hookArea.IsTouchingLayers(Anchors) && currentCursor == null)
+            currentCursor = Instantiate(cursorTemplate, collider.transform);
     }
 
     void StartGrapple()
     {
-        if (grapplingPoint == Vector2.zero) return;
+        grappling = true;
         springJoint.enabled = true;
-        springJoint.autoConfigureConnectedAnchor = false;
-        springJoint.connectedAnchor = grapplingPoint;
-
-        // springJoint.distance = Vector2.Distance(transform.position, grapplingPoint);
-
-        springJoint.dampingRatio = dampingRatio;
-        line.positionCount = 2;
-        
+        springJoint.connectedAnchor = currentCursor.transform.position;
+        lineRenderer.positionCount = 2;
     }
 
     void StopGrapple()
     {
-        line.positionCount = 0;
-        grapplingPoint = Vector2.zero;
+        grappling = false;
+        lineRenderer.positionCount = 0;
         springJoint.enabled = false;
     }
 
     void DrawRope()
-    {   // todo: Use a for loop and make this look more curved and natural
-        if (!springJoint.enabled || grapplingPoint == Vector2.zero) return;
-        line.SetPosition(0, transform.position);
-        line.SetPosition(1, grapplingPoint);
+    {
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, springJoint.connectedAnchor);
     }
 
-    void OnTriggerStay2D(Collider2D collider)
+    void OnTriggerExit2D(Collider2D collider)
     {
-        if (shootAction.WasPressedThisFrame() && grapplingPoint == Vector2.zero)
-        {
-            grapplingPoint = collider.transform.position;
-            StartGrapple();
-        }
+        if (currentCursor != null)
+            Destroy(currentCursor);
     }
 }
-

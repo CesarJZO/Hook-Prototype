@@ -12,20 +12,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float groundDistance;
     [SerializeField] LayerMask groundMask;
 
-    [Header("Parameters")]
-    [SerializeField] Actions actions;
-
     bool Grounded => Physics2D.Raycast(rigidbody.position, Vector2.down, groundDistance, groundMask);
 
     new Rigidbody2D rigidbody;
-    PlayerInput playerInput;
+    public PlayerInput playerInput { get; private set; }
     InputAction moveAction;
 
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
-        moveAction = playerInput.actions[actions.move];
+        moveAction = playerInput.actions[Actions.Move];
     }
 
     void FixedUpdate()
@@ -38,11 +35,6 @@ public class PlayerController : MonoBehaviour
     {
         if (Grounded)
             rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-    }
-
-    public void OnShoot()
-    {
-
     }
 
     void OnDrawGizmos()

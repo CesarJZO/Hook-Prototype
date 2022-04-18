@@ -1,9 +1,8 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Control", menuName = "Configuration/Actions", order = 1)]
-public class Actions : ScriptableObject
+public static class Actions
 {
-    public string move;
-    public string jump;
-    public string shoot;
+    public static string Move => "Move";
+    public static string Jump => "Jump";
+    public static string Shoot => "Shoot";
 }
