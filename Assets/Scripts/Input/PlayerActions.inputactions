@@ -1,8 +1,8 @@
 {
-    "name": "Controls",
+    "name": "PlayerActions",
     "maps": [
         {
-            "name": "Player",
+            "name": "Ground",
             "id": "56f99f8a-6bd8-4532-96fe-52199898fc6b",
             "actions": [
                 {
@@ -144,17 +144,6 @@
                 },
                 {
                     "name": "",
-                    "id": "cf95a376-6c1c-4037-b823-2e0e05f71f76",
-                    "path": "<XInputController>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Genesis",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ee9a8cea-dcfa-4255-a30a-895a19784cd1",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
@@ -172,28 +161,6 @@
                     "processors": "",
                     "groups": "Default",
                     "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ce12f864-9b28-46c3-bf2a-45f3dd673f86",
-                    "path": "<XInputController>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Genesis",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "924e2de7-30a9-4c4e-b0c1-288f4ef45f05",
-                    "path": "<XInputController>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Genesis",
-                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

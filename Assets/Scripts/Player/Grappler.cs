@@ -20,7 +20,7 @@ public class Grappler : MonoBehaviour
         springJoint = GetComponentInParent<SpringJoint2D>();
         springJoint.enabled = false;
         playerInput = GetComponentInParent<PlayerInput>();
-        shootAction = playerInput.actions[Actions.Shoot];
+        shootAction = playerInput.actions["Shoot"];
     }
 
     void Update()
