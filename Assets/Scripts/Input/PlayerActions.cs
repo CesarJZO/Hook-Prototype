@@ -57,13 +57,13 @@ namespace Input
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Attack"",
-                    ""type"": ""Button"",
-                    ""id"": ""2668eafa-de40-4ae4-866d-9ffb7cfb7bbd"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Direction"",
+                    ""type"": ""Value"",
+                    ""id"": ""a0c5b321-f554-4745-bb11-aebad18703cf"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -180,7 +180,7 @@ namespace Input
                 {
                     ""name"": """",
                     ""id"": ""f458abd3-637c-4098-9c89-c9ab10de9eb3"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Default"",
@@ -190,23 +190,78 @@ namespace Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1c82d03b-2c10-453d-ac30-99ea29025644"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""id"": ""b1bd659c-cc6d-44e2-85d0-27b4ba72f98b"",
+                    ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Default"",
-                    ""action"": ""Attack"",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""240ef47f-f87b-4e7c-9620-b898e772cda2"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7e217852-575f-4570-9f3d-c063a6c2847f"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Default"",
-                    ""action"": ""Attack"",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""72da7ce6-d46a-4482-8e42-6d501780de82"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b1a01a16-50f8-4447-a49b-4b363380d557"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a18dfe54-7295-4de3-8670-c4ca2206a261"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""884df3c7-1b9a-4118-a699-22c9b84094be"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a40125d0-2961-4be7-bc39-929a5d65f1c2"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -237,7 +292,7 @@ namespace Input
             m_Ground_Move = m_Ground.FindAction("Move", throwIfNotFound: true);
             m_Ground_Jump = m_Ground.FindAction("Jump", throwIfNotFound: true);
             m_Ground_Shoot = m_Ground.FindAction("Shoot", throwIfNotFound: true);
-            m_Ground_Attack = m_Ground.FindAction("Attack", throwIfNotFound: true);
+            m_Ground_Direction = m_Ground.FindAction("Direction", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -300,7 +355,7 @@ namespace Input
         private readonly InputAction m_Ground_Move;
         private readonly InputAction m_Ground_Jump;
         private readonly InputAction m_Ground_Shoot;
-        private readonly InputAction m_Ground_Attack;
+        private readonly InputAction m_Ground_Direction;
         public struct GroundActions
         {
             private @PlayerActions m_Wrapper;
@@ -308,7 +363,7 @@ namespace Input
             public InputAction @Move => m_Wrapper.m_Ground_Move;
             public InputAction @Jump => m_Wrapper.m_Ground_Jump;
             public InputAction @Shoot => m_Wrapper.m_Ground_Shoot;
-            public InputAction @Attack => m_Wrapper.m_Ground_Attack;
+            public InputAction @Direction => m_Wrapper.m_Ground_Direction;
             public InputActionMap Get() { return m_Wrapper.m_Ground; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -327,9 +382,9 @@ namespace Input
                     @Shoot.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnShoot;
                     @Shoot.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnShoot;
                     @Shoot.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnShoot;
-                    @Attack.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnAttack;
-                    @Attack.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnAttack;
-                    @Attack.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnAttack;
+                    @Direction.started -= m_Wrapper.m_GroundActionsCallbackInterface.OnDirection;
+                    @Direction.performed -= m_Wrapper.m_GroundActionsCallbackInterface.OnDirection;
+                    @Direction.canceled -= m_Wrapper.m_GroundActionsCallbackInterface.OnDirection;
                 }
                 m_Wrapper.m_GroundActionsCallbackInterface = instance;
                 if (instance != null)
@@ -343,9 +398,9 @@ namespace Input
                     @Shoot.started += instance.OnShoot;
                     @Shoot.performed += instance.OnShoot;
                     @Shoot.canceled += instance.OnShoot;
-                    @Attack.started += instance.OnAttack;
-                    @Attack.performed += instance.OnAttack;
-                    @Attack.canceled += instance.OnAttack;
+                    @Direction.started += instance.OnDirection;
+                    @Direction.performed += instance.OnDirection;
+                    @Direction.canceled += instance.OnDirection;
                 }
             }
         }
@@ -373,7 +428,7 @@ namespace Input
             void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnShoot(InputAction.CallbackContext context);
-            void OnAttack(InputAction.CallbackContext context);
+            void OnDirection(InputAction.CallbackContext context);
         }
     }
 }
