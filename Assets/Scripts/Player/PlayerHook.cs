@@ -18,43 +18,46 @@ namespace Player
 
         private void Awake()
         {
+            _results = new Collider2D[maxTargets];
             _lineRenderer = GetComponent<LineRenderer>();
             if (!springJoint) springJoint = GetComponentInParent<SpringJoint2D>();
         }
 
         private void Update()
         {
-            _results = Physics2D.OverlapCircleAll(transform.position, radius, targetLayer);
-
-            if (_results.Length == 0)
+            var size = Physics2D.OverlapCircleNonAlloc(transform.position, radius, _results, targetLayer);
+            if (size == 0)
             {
+                _lineRenderer.positionCount = 0;
                 currentTarget = null;
-                return;
             }
-
-            currentTarget = GetNearestTarget();
+            else
+            {
+                _lineRenderer.positionCount = 2;
+                currentTarget = GetNearestTarget();
+            }
         }
 
         private Transform GetNearestTarget()
         {
-            var min = radius * 2f;
+            var min = float.MaxValue;
             Transform nearestTarget = null;
             foreach (var col in _results)
             {
+                if (!col) break;
                 var distance = Vector3.Distance(transform.position, col.transform.position);
                 if (distance > min) continue;
                 min = distance;
                 nearestTarget = col.transform;
             }
-
             return nearestTarget;
         }
 
         private void OnGUI()
         {
-            GUI.Label(new Rect(0f, 0f, 1f,1f),
+            GUI.Label(new Rect(0f, 0f, 1f, 1f),
                 $@"Current target: {(currentTarget ? currentTarget.name : "None")}
-Targets found: [{string.Join(", ", _results.Select(col => col.name))}]",
+Targets found: [{string.Join(", ", _results.Select(col => !col ? "x" : col.name))}]",
                 new GUIStyle
                 {
                     fontSize = 16,
@@ -66,9 +69,10 @@ Targets found: [{string.Join(", ", _results.Select(col => col.name))}]",
 
         private void LateUpdate()
         {
-            // if (!grappling) return;
-            // _lineRenderer.SetPosition(0, transform.position);
-            // _lineRenderer.SetPosition(0, springJoint.connectedAnchor);
+            if (_lineRenderer.positionCount == 0) return;
+
+            _lineRenderer.SetPosition(0, transform.position);
+            _lineRenderer.SetPosition(1, currentTarget.position);
         }
 
         private void OnDrawGizmos()
