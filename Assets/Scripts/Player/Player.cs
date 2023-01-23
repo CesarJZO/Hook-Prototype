@@ -1,5 +1,4 @@
-﻿using System;
-using StatePattern;
+﻿using StatePattern;
 using UnityEngine;
 
 namespace Player
@@ -23,6 +22,7 @@ namespace Player
         public RunState RunState { get; private set; }
         public JumpState JumpState { get; private set; }
         public FallState FallState { get; private set; }
+        public HookState HookState { get; private set; }
         public PlayerState CurrentState => StateMachine.CurrentState as PlayerState;
 
         #endregion
@@ -38,6 +38,7 @@ namespace Player
             RunState = new RunState(this);
             JumpState = new JumpState(this);
             FallState = new FallState(this);
+            HookState = new HookState(this);
 
             StateMachine = new StateMachine(IdleState);
         }

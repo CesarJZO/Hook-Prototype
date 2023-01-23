@@ -38,6 +38,7 @@ namespace Player
         protected RunState Run => player.RunState;
         protected JumpState Jump => player.JumpState;
         protected FallState Fall => player.FallState;
+        protected HookState Hook => player.HookState;
 
         #endregion
     }

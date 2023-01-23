@@ -9,19 +9,18 @@ namespace Player
         private PlayerActions _playerActions;
         [SerializeField] private Player player;
         [Range(0f, 1f)] public float deadZone;
+
         public float Direction => _playerActions.Ground.Move.ReadValue<float>();
         public bool holdShoot;
 
+
+        public InputAction Shoot => _playerActions.Ground.Shoot;
 
         private void Awake()
         {
             if (!player) player = GetComponentInParent<Player>();
 
             _playerActions = new PlayerActions();
-        }
-
-        private void OnEnable()
-        {
             var ground = _playerActions.Ground;
             ground.Enable();
             ground.Jump.performed += OnJumpPerformed;

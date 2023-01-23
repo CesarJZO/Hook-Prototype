@@ -18,6 +18,7 @@ namespace Player
             return command switch
             {
                 InputCommand.Jump => ChangeState(Jump),
+                InputCommand.Shoot when context.performed => ChangeState(Hook),
                 _ => false
             };
         }
