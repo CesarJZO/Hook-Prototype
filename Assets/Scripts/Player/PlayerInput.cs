@@ -9,6 +9,12 @@ namespace Player
         private PlayerActions _playerActions;
         [SerializeField] private Player player;
 
+        #region Hold actions
+
+        public bool HoldShoot { get; private set; }
+
+        #endregion
+
         private void OnEnable()
         {
             player = GetComponentInParent<Player>();
@@ -36,6 +42,7 @@ namespace Player
 
         private void OnShootPerformed(InputAction.CallbackContext obj)
         {
+            HoldShoot = obj.performed;
             player.CurrentState.ReadInput(obj, InputCommand.Shoot);
         }
 

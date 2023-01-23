@@ -25,7 +25,7 @@ public class Grappler : MonoBehaviour
 
     void Update()
     {
-        if (shootAction.WasPressedThisFrame() && currentCursor != null && currentCursor.transform.position != Vector3.zero)
+        if (shootAction.WasPressedThisFrame() && currentCursor && currentCursor.transform.position != Vector3.zero)
             StartGrapple();
         else if (shootAction.WasReleasedThisFrame())
             StopGrapple();
