@@ -11,6 +11,7 @@ namespace Player
         [Header("Dependencies")]
         public new Rigidbody2D rigidbody;
         public PlayerInput input;
+        public PlayerHook hook;
 
         public RaycastHit2D Grounded => Physics2D.Raycast(transform.position, Vector2.down, settings.groundDistance,
             settings.groundLayerMask);

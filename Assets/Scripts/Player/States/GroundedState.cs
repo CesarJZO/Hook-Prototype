@@ -9,7 +9,8 @@ namespace Player
 
         public override void FixedUpdate()
         {
-            Rigidbody.AddForce(Input.Direction * Settings.speed * Vector2.right);
+            if (!player.hook.Grappling)
+                Rigidbody.AddForce(Input.Direction * Settings.speed * Vector2.right);
         }
 
         public override bool ReadInput(InputAction.CallbackContext context, InputCommand command)

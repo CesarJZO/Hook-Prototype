@@ -1,5 +1,4 @@
-﻿using System;
-using Input;
+﻿using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +10,7 @@ namespace Player
         [SerializeField] private Player player;
         [Range(0f, 1f)] public float deadZone;
         public float Direction => _playerActions.Ground.Move.ReadValue<float>();
-        public bool HoldShoot { get; private set; }
+        public bool holdShoot;
 
 
         private void Awake()
@@ -27,6 +26,7 @@ namespace Player
             ground.Enable();
             ground.Jump.performed += OnJumpPerformed;
             ground.Shoot.performed += OnShootPerformed;
+            ground.Shoot.canceled += OnShootCanceled;
         }
 
         private void OnDisable()
@@ -35,6 +35,7 @@ namespace Player
             ground.Disable();
             ground.Jump.performed -= OnJumpPerformed;
             ground.Shoot.performed -= OnShootPerformed;
+            ground.Shoot.canceled -= OnShootCanceled;
         }
 
         #region Event functions
@@ -46,8 +47,13 @@ namespace Player
 
         private void OnShootPerformed(InputAction.CallbackContext obj)
         {
-            HoldShoot = obj.performed;
+            holdShoot = true;
             player.CurrentState.ReadInput(obj, InputCommand.Shoot);
+        }
+
+        private void OnShootCanceled(InputAction.CallbackContext obj)
+        {
+            holdShoot = false;
         }
 
         #endregion

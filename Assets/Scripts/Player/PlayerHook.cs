@@ -12,15 +12,25 @@ namespace Player
 
         [Header("Dependencies")]
         [SerializeField] private SpringJoint2D springJoint;
+        [SerializeField] private GameObject cursor;
+        [SerializeField] private PlayerInput input;
 
         private LineRenderer _lineRenderer;
         private Collider2D[] _results;
+
+        public bool Grappling => springJoint.enabled;
 
         private void Awake()
         {
             _results = new Collider2D[maxTargets];
             _lineRenderer = GetComponent<LineRenderer>();
-            if (!springJoint) springJoint = GetComponentInParent<SpringJoint2D>();
+            if (!springJoint)
+            {
+                springJoint = GetComponentInParent<SpringJoint2D>();
+                springJoint.enabled = false;
+            }
+
+            if (cursor) cursor.SetActive(false);
         }
 
         private void Update()
@@ -28,14 +38,18 @@ namespace Player
             var size = Physics2D.OverlapCircleNonAlloc(transform.position, radius, _results, targetLayer);
             if (size == 0)
             {
-                _lineRenderer.positionCount = 0;
                 currentTarget = null;
+                return;
             }
-            else
-            {
-                _lineRenderer.positionCount = 2;
-                currentTarget = GetNearestTarget();
-            }
+
+            _lineRenderer.positionCount = 2;
+            currentTarget = GetNearestTarget();
+
+            var targetPos = currentTarget.position;
+
+            cursor.transform.position = targetPos;
+            springJoint.connectedAnchor = targetPos;
+            springJoint.enabled = input.holdShoot;
         }
 
         private Transform GetNearestTarget()
@@ -69,10 +83,18 @@ Targets found: [{string.Join(", ", _results.Select(col => !col ? "x" : col.name)
 
         private void LateUpdate()
         {
-            if (_lineRenderer.positionCount == 0) return;
+            cursor.SetActive(currentTarget);
+            if (!currentTarget) return;
 
-            _lineRenderer.SetPosition(0, transform.position);
-            _lineRenderer.SetPosition(1, currentTarget.position);
+            if (input.holdShoot)
+            {
+                _lineRenderer.SetPosition(0, transform.position);
+                _lineRenderer.SetPosition(1, currentTarget.position);
+            }
+            else
+            {
+                _lineRenderer.positionCount = 0;
+            }
         }
 
         private void OnDrawGizmos()

@@ -6,18 +6,18 @@ namespace Player
 {
     public abstract class PlayerState : State
     {
-        private readonly Player _player;
+        protected readonly Player player;
 
-        protected PlayerState(Player player) => _player = player;
+        protected PlayerState(Player player) => this.player = player;
 
         public virtual bool ReadInput(InputAction.CallbackContext context, InputCommand command) => false;
 
         #region Dependencies wrapper
 
-        protected RaycastHit2D Grounded => _player.Grounded;
-        protected PlayerSettings Settings => _player.settings;
-        protected Rigidbody2D Rigidbody => _player.rigidbody;
-        protected PlayerInput Input => _player.input;
+        protected RaycastHit2D Grounded => player.Grounded;
+        protected PlayerSettings Settings => player.settings;
+        protected Rigidbody2D Rigidbody => player.rigidbody;
+        protected PlayerInput Input => player.input;
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace Player
         protected bool ChangeState(PlayerState state)
         {
             if (!state) return false;
-            _player.StateMachine.ChangeState(state);
+            player.StateMachine.ChangeState(state);
             return true;
         }
 
@@ -34,10 +34,10 @@ namespace Player
 
         #region States wrapper
 
-        protected IdleState Idle => _player.IdleState;
-        protected RunState Run => _player.RunState;
-        protected JumpState Jump => _player.JumpState;
-        protected FallState Fall => _player.FallState;
+        protected IdleState Idle => player.IdleState;
+        protected RunState Run => player.RunState;
+        protected JumpState Jump => player.JumpState;
+        protected FallState Fall => player.FallState;
 
         #endregion
     }
