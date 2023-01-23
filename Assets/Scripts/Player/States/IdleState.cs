@@ -1,6 +1,6 @@
 ﻿namespace Player
 {
-    public class IdleState : PlayerState
+    public class IdleState : GroundedState
     {
         public IdleState(Player player) : base(player) { }
 
