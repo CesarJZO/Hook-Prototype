@@ -1,4 +1,5 @@
-﻿using Input;
+﻿using System;
+using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,17 +9,20 @@ namespace Player
     {
         private PlayerActions _playerActions;
         [SerializeField] private Player player;
-
-        #region Hold actions
-
+        [Range(0f, 1f)] public float deadZone;
+        public float Direction => _playerActions.Ground.Move.ReadValue<float>();
         public bool HoldShoot { get; private set; }
 
-        #endregion
+
+        private void Awake()
+        {
+            if (!player) player = GetComponentInParent<Player>();
+
+            _playerActions = new PlayerActions();
+        }
 
         private void OnEnable()
         {
-            player = GetComponentInParent<Player>();
-
             var ground = _playerActions.Ground;
             ground.Enable();
             ground.Jump.performed += OnJumpPerformed;
@@ -28,7 +32,7 @@ namespace Player
         private void OnDisable()
         {
             var ground = _playerActions.Ground;
-            ground.Enable();
+            ground.Disable();
             ground.Jump.performed -= OnJumpPerformed;
             ground.Shoot.performed -= OnShootPerformed;
         }
