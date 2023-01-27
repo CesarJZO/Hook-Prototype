@@ -21,6 +21,10 @@ namespace Player
             if (!player) player = GetComponentInParent<Player>();
 
             _playerActions = new PlayerActions();
+        }
+
+        private void OnEnable()
+        {
             var ground = _playerActions.Ground;
             ground.Enable();
             ground.Jump.performed += OnJumpPerformed;

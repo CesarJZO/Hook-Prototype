@@ -216,7 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 318113084}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,17 +254,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 495323877}
-  - component: {fileID: 495323879}
   - component: {fileID: 495323874}
   - component: {fileID: 495323873}
   - component: {fileID: 495323880}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &495323873
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -328,30 +327,8 @@ Transform:
   - {fileID: 186998972}
   - {fileID: 1127477862}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &495323879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 495323872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc61ffb73fbf4493a845d41dbb609231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings:
-    speed: 250
-    jumpForce: 10
-    groundLayerMask:
-      serializedVersion: 2
-      m_Bits: 256
-    groundDistance: 0.55
-  rigidbody: {fileID: 495323874}
-  input: {fileID: 1127477863}
-  hook: {fileID: 837242261}
 --- !u!231 &495323880
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -504,7 +481,7 @@ GameObject:
   - component: {fileID: 584044639}
   - component: {fileID: 584044638}
   - component: {fileID: 584044637}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Platform_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -960,10 +937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0833ff76c8514e9e8b788d6a01c9d52b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 5
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   maxTargets: 5
   currentTarget: {fileID: 0}
   springJoint: {fileID: 495323880}
@@ -998,7 +975,7 @@ GameObject:
   - component: {fileID: 876744674}
   - component: {fileID: 876744673}
   - component: {fileID: 876744672}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2614,7 +2591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972680a061334cc19b48019a1d566d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 495323879}
+  player: {fileID: 0}
   deadZone: 0.2
   holdShoot: 0
 --- !u!1 &1822057127
@@ -2662,7 +2639,7 @@ Transform:
   - {fileID: 318113084}
   - {fileID: 2072789746}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1854887695
 GameObject:
@@ -2727,6 +2704,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1975126473
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6432609860406773168, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 768
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773168, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: _groundLayer.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773169, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_Name
+      value: Player_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773169, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432609860406773170, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
 --- !u!1 &2072789745
 GameObject:
   m_ObjectHideFlags: 0
@@ -2738,7 +2784,7 @@ GameObject:
   - component: {fileID: 2072789746}
   - component: {fileID: 2072789748}
   - component: {fileID: 2072789747}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Anchor Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2936,7 +2982,7 @@ GameObject:
   - component: {fileID: 2095282836}
   - component: {fileID: 2095282835}
   - component: {fileID: 2095282834}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Platform_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

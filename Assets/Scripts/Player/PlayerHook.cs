@@ -25,14 +25,9 @@ namespace Player
         {
             _results = new Collider2D[maxTargets];
             _lineRenderer = GetComponent<LineRenderer>();
-            if (!springJoint)
-            {
-                springJoint = GetComponentInParent<SpringJoint2D>();
-                springJoint.enabled = false;
-            }
-
+            if (!springJoint) springJoint = GetComponentInParent<SpringJoint2D>();
+            springJoint.enabled = false;
             currentTarget = null;
-
             if (cursor) cursor.SetActive(false);
         }
 

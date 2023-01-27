@@ -11,11 +11,18 @@ namespace Player
             Rigidbody.velocity = Vector2.zero;
         }
 
+        public override void Update()
+        {
+            if (Input.Direction != 0f)
+                ChangeState(Run);
+        }
+
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
             if (Rigidbody.velocity.magnitude >= Input.deadZone)
                 ChangeState(Run);
+            else if (!Grounded)
+                ChangeState(Fall);
         }
 
         public override string ToString() => nameof(IdleState);
