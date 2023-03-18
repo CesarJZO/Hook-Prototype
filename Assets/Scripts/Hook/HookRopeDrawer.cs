@@ -25,10 +25,10 @@ namespace Hook
         [SerializeField] private Hook hook;
 
         private bool _straightLine = true;
-        private bool _isGrappled = true;
 
         private void OnEnable()
         {
+            if (!lineRenderer) lineRenderer = GetComponent<LineRenderer>();
             _moveTime = 0f;
             lineRenderer.positionCount = precision;
             _waveSize = startWaveSize;
@@ -48,7 +48,6 @@ namespace Hook
         private void OnDisable()
         {
             lineRenderer.enabled = false;
-            _isGrappled = false;
         }
 
         private void LinePointsToFirePoint()
@@ -59,7 +58,7 @@ namespace Hook
 
         private void DrawRope()
         {
-            if (!_isGrappled) return;
+            if (!hook.currentTarget) return;
 
             if (_straightLine)
             {

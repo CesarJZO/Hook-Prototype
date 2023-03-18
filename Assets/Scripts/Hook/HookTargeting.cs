@@ -11,6 +11,7 @@ namespace Hook
         [SerializeField, Min(0f)] private float radius;
         [SerializeField, Min(0f)] private float mouseTolerance;
         [SerializeField, Min(1)] private short maxTargets;
+        [SerializeField] private bool useMouse;
 
         [Header("Debug")]
         [SerializeField] private bool showGizmos;
@@ -29,10 +30,15 @@ namespace Hook
         /// <summary>
         /// Returns the nearest target in the radius.
         /// </summary>
-        /// <returns>The nearest target if found within the circle area, null otherwise.</returns>
+        /// <returns>The nearest target if found within the circle area relative to the fire point position, null otherwise.</returns>
         public Transform GetNearestTarget()
         {
-            return GetNearestTarget(transform.position, radius);
+            if (!useMouse) return GetNearestTarget(transform.position, radius);
+
+            if (!Application.isPlaying) return null;
+            if (_mouse == null || !_mainCamera) return null;
+            var mousePosition = _mainCamera.ScreenToWorldPoint(_mouse.position.ReadValue());
+            return GetNearestTarget(mousePosition, mouseTolerance);
         }
 
         /// <summary>
@@ -44,18 +50,6 @@ namespace Hook
         public Transform GetNearestTarget(Transform t, float tolerance)
         {
             return GetNearestTarget(t.position, tolerance);
-        }
-
-        /// <summary>
-        /// Returns the nearest target relative to the mouse position.
-        /// </summary>
-        /// <returns>If there are multiple targets within the range, it will return the nearest</returns>
-        public Transform GetMouseTarget()
-        {
-            if (_mouse == null || !_mainCamera) return null;
-            Debug.LogWarning("There's no mouse or camera available");
-            var mousePosition = _mainCamera.ScreenToWorldPoint(_mouse.position.ReadValue());
-            return GetNearestTarget(mousePosition, mouseTolerance);
         }
 
         private Transform GetNearestTarget(Vector2 position, float tolerance)
@@ -101,10 +95,7 @@ namespace Hook
 
             var position = transform.position;
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(position, radius);
-
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(position, mouseTolerance);
+            Gizmos.DrawWireSphere(position, useMouse ? mouseTolerance : radius);
 
             var nearestTarget = GetNearestTarget();
             if (!nearestTarget) return;
