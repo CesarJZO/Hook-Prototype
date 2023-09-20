@@ -1,4 +1,5 @@
-﻿using Input;
+﻿using System;
+using Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,8 @@ namespace Player
 {
     public class PlayerInput : MonoBehaviour
     {
+        public event Action<InputAction.CallbackContext> Jump;
+
         private PlayerActions _playerActions;
         [SerializeField] private Player player;
         [Range(0f, 1f)] public float deadZone;
@@ -18,7 +21,8 @@ namespace Player
 
         private void Awake()
         {
-            if (!player) player = GetComponentInParent<Player>();
+            if (!player)
+                player = GetComponentInParent<Player>();
 
             _playerActions = new PlayerActions();
         }
@@ -45,11 +49,13 @@ namespace Player
 
         private void OnJumpPerformed(InputAction.CallbackContext obj)
         {
+            if (!player) return;
             player.CurrentState.ReadInput(obj, InputCommand.Jump);
         }
 
         private void OnShootPerformed(InputAction.CallbackContext obj)
         {
+            if (!player) return;
             holdShoot = true;
             player.CurrentState.ReadInput(obj, InputCommand.Shoot);
         }

@@ -10,7 +10,7 @@ namespace Player
 
         public override void Update()
         {
-            _input = Input.Direction * Settings.airInputInfluence * Settings.speed;
+            _input = Input.Direction * Settings.AirInputInfluence * Settings.Speed;
         }
 
         public override void FixedUpdate()

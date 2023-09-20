@@ -8,7 +8,7 @@ namespace Player
 
         public override void OnStartState()
         {
-            Rigidbody.AddForce(Vector2.up * Settings.jumpForce, ForceMode2D.Impulse);
+            Rigidbody.AddForce(Vector2.up * Settings.JumpForce, ForceMode2D.Impulse);
         }
 
         public override void FixedUpdate()

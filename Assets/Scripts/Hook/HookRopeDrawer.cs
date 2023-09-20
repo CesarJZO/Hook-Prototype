@@ -52,6 +52,7 @@ namespace Hook
 
         private void LinePointsToFirePoint()
         {
+            if (!hook || !hook.currentTarget) return;
             for (var i = 0; i < precision; i++)
                 lineRenderer.SetPosition(i, hook.currentTarget.position);
         }

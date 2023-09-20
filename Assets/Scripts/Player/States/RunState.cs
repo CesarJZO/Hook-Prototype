@@ -9,7 +9,7 @@ namespace Player
 
         public override void Update()
         {
-            _velocity = Input.Direction * Settings.speed;
+            _velocity = Input.Direction * Settings.Speed;
             if (Input.Direction <= Input.deadZone)
                 ChangeState(Idle);
         }
